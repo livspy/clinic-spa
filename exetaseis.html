@@ -1,10 +1,11 @@
 
 <!DOCTYPE html>
+
 <html lang="el">
 <head>
-  <meta charset="UTF-8" />
-  <title>Κατηγορίες Εξετάσεων</title>
-  <style>
+<meta charset="utf-8"/>
+<title>Κατηγορίες Εξετάσεων</title>
+<style>
     body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
     .category { margin-bottom: 2rem; padding: 1rem; border: 1px solid #ccc; background: #fff; }
     h2 { color: #1976d2; }
@@ -22,16 +23,20 @@
   </style>
 </head>
 <body>
+<nav style="background:#1976d2;padding:1rem;margin-bottom:2rem;">
+<a href="index.html" style="color:white;margin-right:1rem;">Στοιχεία</a>
+<a href="istoriko.html" style="color:white;margin-right:1rem;">Ιατρικό Ιστορικό</a>
+<a href="urologiko.html" style="color:white;margin-right:1rem;">Ουρολογικό Ιστορικό</a>
+<a href="visits.html" style="color:white;margin-right:1rem;">Επισκέψεις</a>
+<a href="exetaseis.html" style="color:white;">Εξετάσεις</a>
+</nav>
 
 <h2>Εξετάσεις ανά Κατηγορία</h2>
-
-
 <h3 id="psa-header">PSA / Free PSA (μόνο για άνδρες)</h3>
 <div id="psa-section" style="margin-bottom: 2rem;">
-  <div id="psa-entries"></div>
-  <button onclick="addPsa()">+ Προσθήκη Τιμής PSA</button>
+<div id="psa-entries"></div>
+<button onclick="addPsa()">+ Προσθήκη Τιμής PSA</button>
 </div>
-
 <style>
   .psa-entry {
     display: flex;
@@ -43,7 +48,6 @@
     padding: 0.3rem;
   }
 </style>
-
 <script>
 function addPsa() {
   const psaContainer = document.getElementById("psa-entries");
@@ -58,9 +62,7 @@ function addPsa() {
   psaContainer.appendChild(entry);
 }
 </script>
-
 <div id="exam-categories"></div>
-
 <script>
 const categories = ["Μικροβιολογικές", "Υπερηχογραφήματα", "Uroflow", "Αξονικές", "Μαγνητικές"];
 
@@ -91,10 +93,8 @@ window.onload = () => {
   categories.forEach(cat => container.appendChild(createCategoryBlock(cat)));
 }
 </script>
-
 </body>
 </html>
-
 <script>
 function openPreview(button) {
   const input = button.previousElementSibling.querySelector("input[type='file']");
