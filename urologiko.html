@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+
+<html lang="el">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ουρολογικό Ιστορικό</title>
+<style>
+    body { font-family: sans-serif; padding: 2rem; background: #f0f0f0; }
+    h2 { color: #1976d2; }
+    .section { margin-bottom: 2rem; }
+    .category { margin-bottom: 1rem; }
+    .category button.toggle { background: #1976d2; color: white; border: none; padding: 0.5rem; cursor: pointer; }
+    .drugs { margin-top: 0.5rem; display: none; }
+    .drugs button { margin: 0.3rem; padding: 0.3rem 0.6rem; }
+    .selected-list, .surgery-list, .disease-list { margin-top: 1rem; background: #fff; padding: 1rem; border: 1px solid #ccc; }
+    .selected-list div, .disease-row { margin-bottom: 0.5rem; }
+    textarea { width: 100%; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+<h2>Ουρολογικό Ιστορικό</h2>
+<div class="section">
+<h3>Παθήσεις Ουροποιητικού</h3>
+<div class="disease-list">
+<div class="disease-row">
+<label><input type="checkbox"/> Λιθίαση</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="disease-row">
+<label><input type="checkbox"/> Κωλικός Νεφρού</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="disease-row">
+<label><input type="checkbox"/> Στυτική Δυσλειτουργία</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="disease-row">
+<label><input type="checkbox"/> Ουρολοιμώξεις</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="disease-row">
+<label><input type="checkbox"/> Αιματουρία</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+</div>
+</div>
+<div class="section">
+<h3>Ουρολογικές Επεμβάσεις</h3>
+<div class="drugs">
+<button onclick="selectSurgery('TURis')">TURis</button>
+</div>
+<div class="surgery-list" id="selectedSurgery">
+<strong>Επιλεγμένη Επέμβαση:</strong>
+<textarea placeholder="TURis ή άλλη σημείωση..." rows="2"></textarea>
+</div>
+</div>
+<div class="section">
+<h3>Ουρολογικά Φάρμακα</h3>
+<div class="category">
+<button class="toggle" onclick="toggleCategory('ablockers')">a-blockers</button>
+<div class="drugs" id="ablockers">
+<button onclick="selectDrug('Tamsulosin', 'ablockers')">Tamsulosin</button>
+<button onclick="selectDrug('Alfuzosin', 'ablockers')">Alfuzosin</button>
+<button onclick="selectDrug('Sildosin', 'ablockers')">Sildosin</button>
+</div>
+</div>
+<div class="category">
+<button class="toggle" onclick="toggleCategory('fiveari')">5α-reductase inhibitors</button>
+<div class="drugs" id="fiveari">
+<button onclick="selectDrug('Dutasteride', 'fiveari')">Dutasteride</button>
+<button onclick="selectDrug('Finasteride', 'fiveari')">Finasteride</button>
+</div>
+</div>
+<div class="category">
+<button class="toggle" onclick="toggleCategory('incontinence')">Ακράτεια</button>
+<div class="drugs" id="incontinence">
+<button onclick="selectDrug('Tolterodine', 'incontinence')">Tolterodine</button>
+<button onclick="selectDrug('Fesoterodine', 'incontinence')">Fesoterodine</button>
+<button onclick="selectDrug('Solifenacin', 'incontinence')">Solifenacin</button>
+<button onclick="selectDrug('Mirabegron', 'incontinence')">Mirabegron</button>
+</div>
+</div>
+<div class="category">
+<button class="toggle" onclick="toggleCategory('kombin_KYP')">Συνδυασμός ΚΥΠ</button>
+<div class="drugs" id="kombin_KYP">
+<button onclick="selectDrug('Tamsulosin + Dutasteride', 'kombin_KYP')">Tamsulosin + Dutasteride</button>
+</div>
+</div>
+<div class="category">
+<button class="toggle" onclick="toggleCategory('kombin_akr')">Συνδυασμός Ακράτειας</button>
+<div class="drugs" id="kombin_akr">
+<button onclick="selectDrug('Mirabegron + Solifenacin', 'kombin_akr')">Mirabegron + Solifenacin</button>
+</div>
+</div>
+<div class="selected-list" id="selectedDrugs">
+<strong>Επιλεγμένα Φάρμακα:</strong>
+</div>
+</div>
+<script>
+    const selections = {};
+
+    function toggleCategory(cat) {
+      document.querySelectorAll('.drugs').forEach(div => {
+        if (div.id === cat) {
+          div.style.display = div.style.display === 'block' ? 'none' : 'block';
+        } else {
+          div.style.display = 'none';
+        }
+      });
+    }
+
+    function selectDrug(drug, category) {
+      selections[category] = drug;
+      updateSelectedList();
+      document.getElementById(category).style.display = 'none';
+    }
+
+    function updateSelectedList() {
+      const container = document.getElementById('selectedDrugs');
+      container.innerHTML = "<strong>Επιλεγμένα Φάρμακα:</strong>";
+      for (const cat in selections) {
+        const div = document.createElement('div');
+        div.textContent = selections[cat] + " (" + cat + ")";
+        container.appendChild(div);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Στοιχεία Ασθενούς</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+    }
+    nav {
+      width: 200px;
+      background-color: #1976d2;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      font-weight: bold;
+      text-align: left;
+      padding: 0.5rem 0;
+      cursor: pointer;
+    }
+    .content {
+      flex: 1;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    .section {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .form-area {
+      flex: 1;
+    }
+    .photo-area {
+      width: 180px;
+      height: 220px;
+      border: 1px solid #ccc;
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    h2 {
+      color: #1976d2;
+    }
+    label {
+      display: block;
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.3rem;
+      margin-top: 0.2rem;
+      font-size: 0.9rem;
+    }
+    .phones {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    button.add-phone {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    .gender-male {
+      background-color: #e3f2fd;
+    }
+    .gender-female {
+      background-color: #fce4ec;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <button onclick="alert('Πλοήγηση: Στοιχεία')">Στοιχεία</button>
+    <button onclick="alert('Πλοήγηση: Ιστορικό')">Ιστορικό</button>
+    <button onclick="alert('Πλοήγηση: Επισκέψεις')">Επισκέψεις</button>
+    <button onclick="alert('Πλοήγηση: Εξετάσεις')">Εξετάσεις</button>
+  </nav>
+  <div class="content">
+    <h2>Στοιχεία Ασθενούς</h2>
+    <div class="section gender-none" id="patient-section">
+      <div class="form-area">
+        <label>Ονοματεπώνυμο
+          <input type="text">
+        </label>
+        <label>Ημερομηνία Γέννησης
+          <input type="date">
+        </label>
+        <label>Φύλο
+          <select id="gender" onchange="toggleGenderStyle()">
+            <option value="">Επιλέξτε</option>
+            <option value="male">Άνδρας</option>
+            <option value="female">Γυναίκα</option>
+          </select>
+        </label>
+        <label>ΑΜΚΑ
+          <input type="text">
+        </label>
+        <label>Διεύθυνση
+          <input type="text">
+        </label>
+        <label>Email
+          <input type="email">
+        </label>
+        <label>Ασφαλιστικός Φορέας
+          <input type="text">
+        </label>
+        <label>Συστήσας Ιατρός
+          <input type="text">
+        </label>
+        <label>Τηλέφωνα
+          <div class="phones" id="phoneList">
+            <input type="text" placeholder="Τηλέφωνο">
+          </div>
+          <button class="add-phone" onclick="addPhone()">+ Προσθήκη Τηλεφώνου</button>
+        </label>
+      </div>
+      <div class="photo-area" id="photoPreview">Φωτογραφία</div>
+    </div>
+  </div>
+
+  <script>
+    function addPhone() {
+      const list = document.getElementById('phoneList');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Τηλέφωνο';
+      list.appendChild(input);
+    }
+
+    function toggleGenderStyle() {
+      const section = document.getElementById('patient-section');
+      const gender = document.getElementById('gender').value;
+      section.classList.remove('gender-male', 'gender-female');
+      if (gender === 'male') {
+        section.classList.add('gender-male');
+      } else if (gender === 'female') {
+        section.classList.add('gender-female');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <title>Κατηγορίες Εξετάσεων</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+    .category { margin-bottom: 2rem; padding: 1rem; border: 1px solid #ccc; background: #fff; }
+    h2 { color: #1976d2; }
+    .exam-entry { margin-top: 1rem; border-top: 1px dashed #aaa; padding-top: 1rem; }
+    label { display: block; margin-top: 0.5rem; }
+    input[type="text"], textarea, input[type="date"] {
+      width: 100%; padding: 0.4rem; margin-top: 0.2rem;
+    }
+    input[type="file"] {
+      margin-top: 0.2rem;
+    }
+    button {
+      margin-top: 0.8rem; padding: 0.4rem 0.8rem; background: #1976d2; color: white; border: none; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Εξετάσεις ανά Κατηγορία</h2>
+
+
+<h3 id="psa-header">PSA / Free PSA (μόνο για άνδρες)</h3>
+<div id="psa-section" style="margin-bottom: 2rem;">
+  <div id="psa-entries"></div>
+  <button onclick="addPsa()">+ Προσθήκη Τιμής PSA</button>
+</div>
+
+<style>
+  .psa-entry {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .psa-entry input[type="text"], .psa-entry input[type="date"] {
+    padding: 0.3rem;
+  }
+</style>
+
+<script>
+function addPsa() {
+  const psaContainer = document.getElementById("psa-entries");
+  const entry = document.createElement("div");
+  entry.className = "psa-entry";
+  entry.innerHTML = `
+    <input type="date">
+    <input type="text" placeholder="PSA">
+    <input type="text" placeholder="Ratio">
+    <input type="text" placeholder="Σχόλια">
+  `;
+  psaContainer.appendChild(entry);
+}
+</script>
+
+<div id="exam-categories"></div>
+
+<script>
+const categories = ["Μικροβιολογικές", "Υπερηχογραφήματα", "Uroflow", "Αξονικές", "Μαγνητικές"];
+
+function createCategoryBlock(name) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "category";
+  wrapper.innerHTML = `<h3>${name}</h3><div class="entries"></div><button onclick="addExamEntry(this)">+ Προσθήκη Εξέτασης</button>`;
+  return wrapper;
+}
+
+function addExamEntry(button) {
+  const container = button.previousElementSibling;
+  const entry = document.createElement("div");
+  entry.className = "exam-entry";
+  entry.innerHTML = `
+    <label>Ημερομηνία: <input type="date"></label>
+    <label>Τίτλος Εξέτασης: <input type="text" placeholder="π.χ. TRUS, Καλλιέργεια ούρων"></label>
+    <label>Σχόλια: <textarea rows="2" placeholder="Συμπληρωματικές πληροφορίες..."></textarea></label>
+    <label>Αρχείο: <input type="file" accept=".pdf" onchange="previewFile(this)"></label>
+    <button onclick="openPreview(this)">📄 Προβολή Εξέτασης</button>
+    <iframe style="width:100%;height:400px;display:none;margin-top:1rem;border:1px solid #ccc;"></iframe>
+  `;
+  container.appendChild(entry);
+}
+
+window.onload = () => {
+  const container = document.getElementById("exam-categories");
+  categories.forEach(cat => container.appendChild(createCategoryBlock(cat)));
+}
+</script>
+
+</body>
+</html>
+
+<script>
+function openPreview(button) {
+  const input = button.previousElementSibling.querySelector("input[type='file']");
+  const file = input.files[0];
+  const iframe = button.nextElementSibling;
+  if (file && file.type === "application/pdf") {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      iframe.src = e.target.result;
+      iframe.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  } else {
+    alert("Παρακαλώ επιλέξτε αρχείο PDF.");
+  }
+}
+</script>

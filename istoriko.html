@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html lang="el">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ιατρικό Ιστορικό</title>
+<style>
+    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+    h2 { color: #1976d2; }
+    .section { margin-bottom: 2rem; }
+    .row { margin-bottom: 1rem; }
+    .row label { display: block; font-weight: bold; margin-bottom: 0.3rem; }
+    textarea, input[type="text"], input[type="date"] { width: 100%; padding: 0.4rem; }
+    .sub-options { margin-left: 1rem; font-size: 0.9rem; }
+    .sub-options label { font-weight: normal; }
+    .entry { margin-bottom: 0.5rem; }
+    .add-button { margin-top: 0.5rem; padding: 0.3rem 0.6rem; cursor: pointer; }
+    .entry button { margin-left: 0.5rem; padding: 0.2rem 0.4rem; }
+  
+  .istoriko-section label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .istoriko-section .diagnosis {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .istoriko-section input[type="text"] {
+    padding: 0.3rem;
+    flex: 1;
+  }
+  .istoriko-section textarea {
+    width: 100%;
+    padding: 0.3rem;
+  }
+  .istoriko-section button {
+    padding: 0.3rem 0.6rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+  }
+  .istoriko-section .past-drugs {
+    margin-top: 1rem;
+    font-style: italic;
+    color: #555;
+  }
+</style>
+</head>
+<body class="istoriko-section">
+<div>
+
+
+
+
+</div><h2>Ιατρικό Ιστορικό</h2>
+<div class="section">
+<h3>Παθήσεις</h3>
+<div id="diseaseList">
+<div class="row">
+<label><input type="checkbox"/> Αρτηριακή Υπέρταση (ΑΥ)</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="row">
+<label><input id="snCheckbox" onchange="toggleSubOptions()" type="checkbox"/> Στεφανιαία Νόσος (ΣΝ)</label>
+<div class="sub-options" id="snOptions" style="display:none;">
+<label><input type="checkbox"/> ΟΕΜ</label>
+<label><input type="checkbox"/> Bypass</label>
+<label><input type="checkbox"/> Stent</label>
+</div>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="row">
+<label><input type="checkbox"/> Αρρυθμίες</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="row">
+<label><input type="checkbox"/> Σακχαρώδης Διαβήτης (Σ.Δ.)</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="row">
+<label><input type="checkbox"/> Θυρεοειδής</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="row">
+<label><input type="checkbox"/> Γλαύκωμα</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+<div class="row">
+<label><input type="checkbox"/> Καταρράκτης</label>
+<textarea placeholder="Σχόλια..."></textarea>
+</div>
+</div>
+<button class="add-button" onclick="addDisease()">+ Προσθήκη Πάθησης</button><h3>Αλλεργίες</h3><label><input name="allergy" onchange="toggleAllergy(true)" type="radio"/> Ναι</label><label><input name="allergy" onchange="toggleAllergy(false)" type="radio"/> Όχι</label><div id="allergy-details" style="display:none;">
+<input placeholder="Αλλεργία σε φάρμακα" type="text"/>
+</div>
+</div>
+<div class="section">
+
+
+</div>
+<div class="section">
+<h3>Χειρουργικές Επεμβάσεις</h3>
+<div id="surgeryList"></div>
+<button class="add-button" onclick="addSurgery()">+ Προσθήκη Επέμβασης</button>
+</div>
+<div class="section">
+<h3>Τρέχοντα Φάρμακα</h3>
+<div id="drugList"></div>
+<button class="add-button" onclick="addDrug()">+ Προσθήκη Φαρμάκου</button>
+</div>
+<div class="section">
+<h3>Παλιότερα Φάρμακα</h3>
+<div id="oldDrugList"></div>
+</div>
+<script>
+    function toggleSubOptions() {
+      document.getElementById('snOptions').style.display = document.getElementById('snCheckbox').checked ? 'block' : 'none';
+    }
+
+    function toggleAllergyField() {
+      document.getElementById('allergyField').style.display = document.getElementById('allergySelect').value === 'yes' ? 'block' : 'none';
+    }
+
+    function addSurgery() {
+      const div = document.createElement('div');
+      div.className = 'entry';
+      div.innerHTML = '<input type="text" placeholder="Επέμβαση"> <input type="date"> <textarea placeholder="Σχόλια..."></textarea>';
+      document.getElementById('surgeryList').appendChild(div);
+    }
+
+    function addDrug() {
+      const div = document.createElement('div');
+      div.className = 'entry';
+      const drugInput = document.createElement('input');
+      drugInput.type = 'text';
+      drugInput.placeholder = 'Φάρμακο';
+      const comment = document.createElement('textarea');
+      comment.placeholder = 'Ενδείξεις ή σχόλια...';
+      const btn = document.createElement('button');
+      btn.textContent = '✕';
+      btn.title = 'Διακοπή';
+      btn.onclick = () => {
+        div.remove();
+        addOldDrug(drugInput.value, comment.value);
+      };
+      div.appendChild(drugInput);
+      div.appendChild(comment);
+      div.appendChild(btn);
+      document.getElementById('drugList').appendChild(div);
+    }
+
+    function addOldDrug(name, comment) {
+      const div = document.createElement('div');
+      div.className = 'entry';
+      div.innerHTML = `<strong>${name}</strong><br><em>${comment}</em>`;
+      document.getElementById('oldDrugList').appendChild(div);
+    }
+
+    function addDisease() {
+      const container = document.getElementById('diseaseList');
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = '<label><input type="checkbox"> Νέα Πάθηση</label><textarea placeholder="Σχόλια..."></textarea>';
+      container.appendChild(row);
+    }
+  
+  function toggleAllergy(state) {
+    document.getElementById('allergy-details').style.display = state ? 'block' : 'none';
+  }
+
+  function addCustomDiagnosis() {
+    const container = document.getElementById('custom-diagnoses');
+    const row = document.createElement('div');
+    row.className = 'diagnosis';
+    row.innerHTML = '<input type="text" placeholder="Νέα πάθηση"> <input type="text" placeholder="Σχόλια">';
+    container.appendChild(row);
+  }
+
+  function addCurrentDrug() {
+    const currentList = document.getElementById('current-drugs');
+    const row = document.createElement('div');
+    row.className = 'diagnosis';
+    row.innerHTML = '<input type="text" placeholder="Φάρμακο"> <button onclick="markAsPastDrug(this)">⏳</button>';
+    currentList.appendChild(row);
+  }
+
+  function markAsPastDrug(btn) {
+    const row = btn.parentElement;
+    document.getElementById('past-drugs').appendChild(row);
+    btn.remove(); // remove the "⏳" button after marking as past
+  }
+</script>
+
+
+
+<h3>Φάρμακα</h3>
+<div id="current-drugs"></div>
+<button onclick="addCurrentDrug()">+ Προσθήκη Φαρμάκου</button>
+<div class="past-drugs" id="past-drugs">
+<h4>Προηγούμενα Φάρμακα</h4>
+</div>
+
+
+</body>
+</html>
