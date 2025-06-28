@@ -75,6 +75,14 @@ button {
 </style>
 </head>
 <body>
+<nav style="background:#1976d2;padding:1rem;margin-bottom:2rem;">
+<a href="index.html" style="color:white;margin-right:1rem;">Στοιχεία</a>
+<a href="istoriko.html" style="color:white;margin-right:1rem;">Ιατρικό Ιστορικό</a>
+<a href="urologiko.html" style="color:white;margin-right:1rem;">Ουρολογικό Ιστορικό</a>
+<a href="visits.html" style="color:white;margin-right:1rem;">Επισκέψεις</a>
+<a href="exetaseis.html" style="color:white;">Εξετάσεις</a>
+</nav>
+
 <h2>Επισκέψεις</h2>
 <div class="visit-row">
 <input placeholder="Ημερομηνία" type="date"/>
@@ -93,38 +101,31 @@ button {
 <label>Συχνουρία <input type="checkbox"/></label>
 <input placeholder="Σχόλια" type="text"/>
 </div>
-
 <div class="symptom-row">
 <label>Δυσουρία <input type="checkbox"/></label>
 <input placeholder="Σχόλια" type="text"/>
 </div>
-
 <div class="symptom-row">
 <label>Αιματουρία <input type="checkbox"/></label>
 <input placeholder="Σχόλια" type="text"/>
 </div>
-
 <div class="symptom-row">
 <label>Διστακτικότητα <input type="checkbox"/></label>
 <input placeholder="Σχόλια" type="text"/>
 </div>
-
 <div class="symptom-row">
 <label>Ατελής Κένωση <input type="checkbox"/></label>
 <input placeholder="Σχόλια" type="text"/>
 </div>
-
 <div class="symptom-row">
 <label>Ακτίνα Ούρησης <input type="checkbox"/></label>
 <input placeholder="Σχόλια" type="text"/>
 </div>
-
 <div class="symptom-row">
 <label>Ακράτεια Ούρων <input type="checkbox"/></label>
 <input placeholder="Σχόλια" type="text"/>
 </div>
 </div><div class="symptom-group"></div>
-
 <h3>Κλινική Εξέταση</h3>
 <div class="exam-row">
 <label>Κοιλιά:</label>
@@ -168,8 +169,6 @@ button {
 <div class="porisma-block">
 <textarea id="porisma-text" placeholder="Πόρισμα..."></textarea>
 </div>
-
-
 <h3>Προγραμματισμός επόμενης εξέτασης</h3>
 <div class="program-row">
 <input type="date"/>
@@ -181,8 +180,6 @@ button {
 </select>
 <input placeholder="Σχόλια" type="text"/>
 </div>
-
-
 </div>
 <script>
     function toggleDetails(button) {
