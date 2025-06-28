@@ -85,6 +85,39 @@
       background-color: #fce4ec;
     }
   </style>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB8cK6qGnnAz4f6PYYikXO7d_XQZlygT2E",
+    authDomain: "clinic-app-e9cd6.firebaseapp.com",
+    projectId: "clinic-app-e9cd6",
+    storageBucket: "clinic-app-e9cd6.firebasestorage.app",
+    messagingSenderId: "623361194399",
+    appId: "1:623361194399:web:db9cf84f96bf0522a065aa",
+    measurementId: "G-4WJS21FQL9"
+  };
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  function savePatientData() {
+    const name = document.querySelector('input[name="name"]')?.value || "";
+    const dob = document.querySelector('input[name="dob"]')?.value || "";
+    const gender = document.querySelector('select[name="gender"]')?.value || "";
+    const phone = Array.from(document.querySelectorAll('input[name="phone"]')).map(i => i.value).filter(Boolean);
+
+    db.collection("patients").add({
+      name, dob, gender, phone,
+      timestamp: new Date().toISOString()
+    }).then(() => {
+      alert("✅ Αποθηκεύτηκε επιτυχώς!");
+    }).catch(err => {
+      alert("❌ Σφάλμα κατά την αποθήκευση: " + err.message);
+    });
+  }
+</script>
 </head>
 <body>
 <nav style="background:#1976d2;padding:1rem;margin-bottom:2rem;">
@@ -94,7 +127,6 @@
 <a href="visits.html" style="color:white;margin-right:1rem;">Επισκέψεις</a>
 <a href="exetaseis.html" style="color:white;">Εξετάσεις</a>
 </nav>
-
 <nav>
 <button onclick="alert('Πλοήγηση: Στοιχεία')">Στοιχεία</button>
 <button onclick="alert('Πλοήγηση: Ιστορικό')">Ιστορικό</button>
@@ -163,5 +195,5 @@
       }
     }
   </script>
-</body>
+<button onclick="savePatientData()" style="margin-top:2rem;padding:0.5rem 1rem;background:#1976d2;color:white;border:none;">Αποθήκευση Ασθενούς</button></body>
 </html>
